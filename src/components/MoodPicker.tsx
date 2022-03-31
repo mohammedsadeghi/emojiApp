@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Image} from 'react-native';
 import {MoodOptionType} from '../Types';
 import {theme} from '../Theme';
 
@@ -10,10 +10,35 @@ const moodOptions: MoodOptionType[] = [
   {emoji: '🥳', description: 'celebratory'},
   {emoji: '😤', description: 'frustrated'},
 ];
+const ImageSrc = require('./../../assets/butterflies.png');
 
-export const MoodPicker: React.FC = () => {
+type MoodPickerProps = {
+  handleSelectedMood: (moodOption: MoodOptionType) => void;
+};
+export const MoodPicker: React.FC<MoodPickerProps> = ({handleSelectedMood}) => {
+  console.log(handleSelectedMood);
+
   const [selectedMood, setSelectedMood] = React.useState<MoodOptionType>();
+  const [hasSelected, setHasSelecteed] = React.useState<boolean>(false);
 
+  const handlePress = React.useCallback(() => {
+    selectedMood && handleSelectedMood(selectedMood);
+    selectedMood && setSelectedMood(undefined);
+    selectedMood && setHasSelecteed(true);
+  }, [selectedMood, handleSelectedMood]);
+  if (hasSelected) {
+    return (
+      <View style={styles.container}>
+        <Image source={ImageSrc} style={styles.image} />
+        <Pressable
+          android_ripple={{radius: 80}}
+          style={styles.button}
+          onPress={() => setHasSelecteed(false)}>
+          <Text style={styles.buttonText}>Choose another!!</Text>
+        </Pressable>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>How are you right now?</Text>
@@ -25,7 +50,6 @@ export const MoodPicker: React.FC = () => {
               android_ripple={{
                 color: '#ccc',
                 borderless: true,
-                foreground: false,
                 radius: 35,
               }}
               style={[
@@ -42,7 +66,10 @@ export const MoodPicker: React.FC = () => {
           </View>
         ))}
       </View>
-      <Pressable style={styles.button}>
+      <Pressable
+        android_ripple={{radius: 80}}
+        style={styles.button}
+        onPress={handlePress}>
         <Text style={styles.buttonText}>Choose</Text>
       </Pressable>
     </View>
@@ -82,6 +109,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     padding: 20,
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
   heading: {
     fontSize: 20,
@@ -102,5 +130,8 @@ const styles = StyleSheet.create({
     color: theme.colorWhite,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  image: {
+    alignSelf: 'center',
   },
 });
