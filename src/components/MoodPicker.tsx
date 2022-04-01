@@ -16,7 +16,7 @@ type MoodPickerProps = {
   handleSelectedMood: (moodOption: MoodOptionType) => void;
 };
 export const MoodPicker: React.FC<MoodPickerProps> = ({handleSelectedMood}) => {
-  console.log(handleSelectedMood);
+  //console.log(handleSelectedMood);
 
   const [selectedMood, setSelectedMood] = React.useState<MoodOptionType>();
   const [hasSelected, setHasSelecteed] = React.useState<boolean>(false);
@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center',
     padding: 10,
+    overflow: 'hidden',
   },
   buttonText: {
     color: theme.colorWhite,
