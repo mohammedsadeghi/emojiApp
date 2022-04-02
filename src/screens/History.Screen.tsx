@@ -8,7 +8,7 @@ export const History: React.FC = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={appContext.moodList}
+        data={appContext.moodList.slice().reverse()}
         renderItem={({item}) => <MoodItemRow item={item} />}
         keyExtractor={item => item.timestamp.toString()}
         ListEmptyComponent={() => <Text>No moods yet</Text>}

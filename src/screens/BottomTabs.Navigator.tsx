@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home} from './Home.Screen';
 import {History} from './History.Screen';
 import {AnalyticsIcon, HistoryIcon, HomeIcon} from '../components/Icons';
+import {theme} from '../Theme';
 const BottomTab = createBottomTabNavigator();
 
 export const BottomTabs: React.FC = () => {
@@ -12,6 +13,7 @@ export const BottomTabs: React.FC = () => {
         tabBarShowLabel: false,
         headerShown: true,
         headerTitleAlign: 'center',
+        headerTitleStyle: {fontFamily: theme.fontFamilyBold},
         tabBarIcon: ({color, size}) => {
           if (route.name === 'Home') {
             return <HomeIcon color={color} size={size} />;
